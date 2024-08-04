@@ -4,9 +4,12 @@ import com.codigoWalter.Learning.Entity.Libro;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 public class Rutas {
@@ -31,13 +34,17 @@ public class Rutas {
 
         }
     @PostMapping("/libro")
-    public String guardarLibro(@RequestBody Libro libro){
+    public ResponseEntity<String>  guardarLibro(@RequestBody Libro libro){
 
         if (libro.getCantidadDeLibros() ==1){
             logger.error("El libro esta vacion ");
-             HttpStatus.OK("Se creo exitosamente el libro");
+             return new ResponseEntity<>("El libro esta vacio", BAD_REQUEST);
+
+
+
         }
-        return "Libro guardado " + libro.toString();
+        logger.info("Se guardo el libro exitosamente");
+        return new ResponseEntity<>("Se guardo el libro correctamente! " + libro.toString(), OK);
         }
 
     }
