@@ -1,6 +1,7 @@
 package com.codigoWalter.Learning;
 
 import com.codigoWalter.Learning.Entity.Libro;
+import com.codigoWalter.Learning.Entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -75,6 +76,29 @@ public class Rutas {
         logger.info("El numero es entero positivo");
         return numero;
 
+    }
+
+    //Json al final al cabo es un string con esa determinacion de javascript, la idea es que vamos vaciar un response en nuestro programa ✅
+
+    @GetMapping("/userData")
+    public ResponseEntity<String> getUserData(){
+    return ResponseEntity.status(OK)
+            .header("Content-Type", "application/json")
+            .body("{\"name\":\"marry\"}");
+    //La idea es no escribir JSON de una forma cruda.
+    }
+    @GetMapping("/userData/v2")
+    public Map<String,Object> getUserDataV2(){
+
+        //Map representa un diccionario de clave y valor. Como son igualmente los JSON
+        return Map.of("user",Map.of("name","Mary","age",23));
+
+
+    }
+
+    @GetMapping("/userData/v3")
+    public User getUserDatav3(){
+        return  new User("Walter","Montoya",23,"1007017276");
     }
 }
 
